@@ -456,7 +456,15 @@ $(document).ready(function() {
     }
   }
 
-  //
+//
+// * 河白色 #FFFFFF rgb(255, 255, 255)
+// * 杏仁黄 #FAF9DE rgb(250, 249, 222)
+// * 秋叶褐 #FFF2E2 rgb(255, 242, 226)
+// * 胭脂红 #FDE6E0 rgb(253, 230, 224)
+// * 青草绿 #E3EDCD rgb(227, 237, 205)
+// * 海天蓝 #DCE2F1 rgb(220, 226, 241)
+// * 葛巾紫 #E9EBFE rgb(233, 235, 254)
+// * 极光灰 #EAEAEF rgb(234, 234, 239)
   var _webookBox = $(`
     <div id="webook_box" class="wr_dialog" style="display: none;">
       <div class="wr_dialog_mask"></div>
@@ -471,19 +479,23 @@ $(document).ready(function() {
 
             <div style="margin-top: 10px; color: #c7c6c6; font-size: 13px;">设置背景</div>
             <div style="display: flex; flex-direction: row; margin-top: 5px;">
-              <div id="webook_ui_1" style="background-color: #e2e2e4; width: 24px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#e2e2e4"></div>
-              <div id="webook_ui_2" style="background-color: #e1dac7; width: 24px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#e1dac7"></div>
-              <div id="webook_ui_3" style="background-color: #b3d6b4; width: 24px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#b3d6b4"></div>
-              <div id="webook_ui_4" style="background-color: #ffc107; width: 24px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#ffc107"></div>
+              <div class="webook_ui" style="background-color: #e2e2e4; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#e2e2e4"></div>
+              <div class="webook_ui" style="background-color: #e1dac7; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#e1dac7"></div>
+              <div class="webook_ui" style="background-color: #b3d6b4; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#b3d6b4"></div>
+              <div class="webook_ui" style="background-color: #ffc107; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#ffc107"></div>
+              <div class="webook_ui" style="background-color: #fff2e2; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#fff2e2"></div>
+              <div class="webook_ui" style="background-color: #e3edcd; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#e3edcd"></div>
+              <div class="webook_ui" style="background-color: #eaeaef; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#eaeaef"></div>
+              <div class="webook_ui" style="background-color: #faf9de; width: 14px; height: 24px; margin: 0 5px; cursor: pointer;" data-color="#faf9de"></div>
             </div>
 
             <div style="margin-top: 10px; color: #c7c6c6; font-size: 13px;">屏幕</div>
             <div style="display: flex; flex-direction: row; margin-top: 5px;">
-              <div id="webook_screen_1_0" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">默认</div>
-              <div id="webook_screen_1_2" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.2</div>
-              <div id="webook_screen_1_4" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.4</div>
-              <div id="webook_screen_1_6" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.6</div>
-              <div id="webook_screen_2_0" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">2.0</div>
+              <div class="webook_screen" data-speed="1.0" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">默认</div>
+              <div class="webook_screen" data-speed="1.2" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.2</div>
+              <div class="webook_screen" data-speed="1.4" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.4</div>
+              <div class="webook_screen" data-speed="1.6" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">1.6</div>
+              <div class="webook_screen" data-speed="2.0" style="color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;">2.0</div>
             </div>
 
           </div>
@@ -559,11 +571,14 @@ $(document).ready(function() {
 
       chrome.storage.local.get(['webook_ui'], function(result) {
         let webook_ui = result.webook_ui
+        console.log("webook_ui:"+webook_ui)
         if (webook_ui) {
-          let _obj = $(`#${webook_ui}`)
-          if (_obj.length > 0) {
-            _obj[0].click()
-          }
+          var d = document.querySelectorAll('.webook_ui');
+          d.forEach(function(obj){
+            if($(obj).data("color") == webook_ui){
+              $(obj).trigger( "click" );
+            }
+          })         
         }
       })
 
@@ -579,56 +594,21 @@ $(document).ready(function() {
         $('#webook_master span').css('color', '#595a5a')
       }
 
-      $('#webook_screen_1_0').click(function() {
-        resetScreen()
-        chrome.storage.local.remove('webook_screen')
+      $('.webook_screen').click(function() {
+        var speed = parseInt($(this).data("speed"))
+        if(speed == 1){ 
+          resetScreen()
+          chrome.storage.local.remove('webook_screen')
+        } else {
+          setScreen(_def_max_width * speed)
+          chrome.storage.local.set({'webook_screen': speed})
+        }
       })
 
-      $('#webook_screen_1_2').click(function() {
-        setScreen(_def_max_width * 1.2)
-        chrome.storage.local.set({'webook_screen': '1.2'})
-      })
-
-      $('#webook_screen_1_4').click(function() {
-        setScreen(_def_max_width * 1.4)
-        chrome.storage.local.set({'webook_screen': '1.4'})
-      })
-
-      $('#webook_screen_1_6').click(function() {
-        setScreen(_def_max_width * 1.6)
-        chrome.storage.local.set({'webook_screen': '1.6'})
-      })
-
-      $('#webook_screen_2_0').click(function() {
-        setScreen(_def_max_width * 2.0)
-        chrome.storage.local.set({'webook_screen': '2.0'})
-      })
-
-      $('#webook_ui_1').click(function(e) {
-        console.log('webook_ui_1')
+      $('.webook_ui').click(function(e) {
+        console.log('webook_ui')
         let _c = $(this).data('color')
-        chrome.storage.local.set({'webook_ui': 'webook_ui_1'})
-        set_webook_ui(_c)
-      })
-
-      $('#webook_ui_2').click(function(e) {
-        console.log('webook_ui_2')
-        let _c = $(this).data('color')
-        chrome.storage.local.set({'webook_ui': 'webook_ui_2'})
-        set_webook_ui(_c)
-      })
-
-      $('#webook_ui_3').click(function(e) {
-        console.log('webook_ui_3')
-        let _c = $(this).data('color')
-        chrome.storage.local.set({'webook_ui': 'webook_ui_3'})
-        set_webook_ui(_c)
-      })
-
-      $('#webook_ui_4').click(function(e) {
-        console.log('webook_ui_4')
-        let _c = $(this).data('color')
-        chrome.storage.local.set({'webook_ui': 'webook_ui_4'})
+        chrome.storage.local.set({'webook_ui': _c})
         set_webook_ui(_c)
       })
 
