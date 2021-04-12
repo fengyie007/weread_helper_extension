@@ -466,6 +466,15 @@ $(document).ready(function() {
 // * 葛巾紫 #E9EBFE rgb(233, 235, 254)
 // * 极光灰 #EAEAEF rgb(234, 234, 239)
   var _webookBox = $(`
+  <style type="text/css">
+  .webook_ui {
+    height: 24px; weight: 14px; margin: 0 5px; cursor: pointer;
+  }
+  
+  .webook_screen{
+    color: #a1a1a1; margin: 0 5px; cursor: pointer; font-size: 13px;
+  }
+  </style>
     <div id="webook_box" class="wr_dialog" style="display: none;">
       <div class="wr_dialog_mask"></div>
       <div class="wr_dialog_container wr_dialog_bg">
